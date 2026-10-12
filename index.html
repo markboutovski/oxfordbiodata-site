@@ -1,0 +1,466 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Oxford BioData</title>
+<meta name="description" content="Oxford BioData acquires preclinical, clinical-stage and agri-food biotechnology data, sells or licenses it to AI and industry partners, and develops models with biotechs.">
+<meta name="theme-color" content="#0e352d">
+<link rel="canonical" href="https://oxfordbiodata.com/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Oxford BioData">
+<meta property="og:title" content="Oxford BioData">
+<meta property="og:description" content="Data infrastructure for scientific development and AI. We acquire, standardize and license biotech R&amp;D data.">
+<meta property="og:url" content="https://oxfordbiodata.com/">
+<meta property="og:image" content="https://oxfordbiodata.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preload" href="/fonts/ibm-plex-sans-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/ibm-plex-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Oxford BioData","url":"https://oxfordbiodata.com/","email":"team@oxfordbiodata.com","description":"Oxford BioData acquires preclinical, clinical-stage and agri-food biotechnology data, sells or licenses it to AI and industry partners, and develops models with biotechs."}</script>
+<style id="fonts">
+@font-face{font-family:"IBM Plex Sans";font-style:normal;font-weight:400;font-display:swap;src:url("/fonts/ibm-plex-sans-latin-400-normal.woff2") format("woff2")}
+@font-face{font-family:"IBM Plex Sans";font-style:normal;font-weight:700;font-display:swap;src:url("/fonts/ibm-plex-sans-latin-700-normal.woff2") format("woff2")}
+@font-face{font-family:"IBM Plex Mono";font-style:normal;font-weight:400;font-display:swap;src:url("/fonts/ibm-plex-mono-latin-400-normal.woff2") format("woff2")}
+@font-face{font-family:"IBM Plex Mono";font-style:normal;font-weight:700;font-display:swap;src:url("/fonts/ibm-plex-mono-latin-700-normal.woff2") format("woff2")}
+</style>
+<style id="site">
+/* Layout: one continuous column. Forest-green bands open and close a white page;
+   the platform section is a vertical data pipeline (sources, standardization, products)
+   whose connectors light up in sequence as the reader scrolls down. */
+:root{
+  --forest:#0e352d;          /* bands */
+  --forest-line:#2a584c;     /* hairlines and quiet borders on forest */
+  --green:#2eb07e;           /* accent: pipeline, rails, buttons */
+  --green-ink:#137f58;       /* accent used as text on white */
+  --mint:#9fd8be;            /* accent used as text on forest */
+  --ink:#14221e;             /* headings */
+  --body:#374843;            /* running text */
+  --muted:#5c6d67;           /* secondary text */
+  --rule:#d0dcd7;            /* hairlines on white */
+  --wash:#eef4f1;            /* tinted panels */
+  --card:#fafcfb;            /* product cards */
+  --paper:#ffffff;
+  --on-forest:#d3e3dc;       /* running text on forest */
+  --on-forest-muted:#8fb0a4; /* secondary text on forest */
+  --dot:#4b7d6f;             /* resting dots in the field */
+
+  --sans:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+
+  --gutter:clamp(16px,4vw,40px);
+  --gap:clamp(14px,2vw,22px);
+  --section:clamp(64px,9vw,112px);
+  color-scheme:light;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--body);font-family:var(--sans);font-size:1rem;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+svg{max-width:100%}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--green);outline-offset:3px}
+h1,h2,h3{margin:0;color:var(--ink);font-weight:700;text-wrap:balance}
+p{margin:0}
+
+.wrap{width:100%;max-width:calc(1080px + 2 * var(--gutter));margin-inline:auto;padding-inline:var(--gutter)}
+.skip{position:absolute;left:-9999px;top:12px;z-index:10;background:var(--paper);color:var(--ink);padding:8px 12px;font-family:var(--mono);font-size:.8125rem}
+.skip:focus{left:16px}
+
+/* Labels: spaced mono capitals followed by a hairline, as on the one-pager */
+.eyebrow{display:flex;align-items:center;gap:16px;margin:0 0 18px;font-family:var(--mono);font-weight:700;font-size:.75rem;line-height:1.4;letter-spacing:.32em;text-transform:uppercase;color:var(--green-ink)}
+.eyebrow::after{content:"";flex:1;height:1px;background:var(--rule)}
+h2{font-size:clamp(1.65rem,1.2rem + 1.8vw,2.4rem);line-height:1.15;letter-spacing:-.01em}
+.lede{margin-top:12px;max-width:44rem;color:var(--muted);font-size:1.0625rem}
+
+/* ---------- Hero ---------- */
+.hero{position:relative;overflow:hidden;isolation:isolate;background:var(--forest);color:var(--paper)}
+.field{position:absolute;top:0;right:0;z-index:-1;width:min(58%,660px);height:100%;pointer-events:none;
+  -webkit-mask-image:linear-gradient(to left,#000 30%,transparent 100%);mask-image:linear-gradient(to left,#000 30%,transparent 100%)}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:22px 0}
+.mark{display:inline-flex;align-items:center;gap:12px;text-decoration:none;color:var(--paper);font-family:var(--mono);font-size:.75rem;font-weight:700;letter-spacing:.24em;text-transform:uppercase}
+.mark svg{width:26px;height:26px;flex:none}
+.nav ul{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:6px clamp(14px,2.4vw,30px);margin:0;padding:0;list-style:none}
+.nav ul a{display:inline-block;padding-block:6px;border-bottom:1px solid transparent;color:var(--on-forest);font-family:var(--mono);font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;transition:color .2s,border-color .2s}
+.nav ul a:hover{color:var(--paper);border-bottom-color:var(--mint)}
+.hero-body{padding-block:clamp(56px,9vw,104px) clamp(60px,8vw,96px)}
+.hero h1{color:var(--paper);font-size:clamp(2.75rem,1.5rem + 5.2vw,5.25rem);line-height:1;letter-spacing:-.02em}
+.tagline{margin-top:22px;font-family:var(--mono);font-weight:700;font-size:clamp(.6875rem,.62rem + .3vw,.8125rem);line-height:1.8;letter-spacing:.3em;text-transform:uppercase;color:var(--mint)}
+.intro{margin-top:clamp(28px,4vw,40px);max-width:38rem;color:var(--on-forest);font-size:clamp(1.0625rem,1rem + .35vw,1.25rem);line-height:1.6}
+.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:clamp(28px,4vw,40px)}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:13px 18px;border:1px solid var(--green);font-family:var(--mono);font-size:.75rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;transition:background-color .2s,border-color .2s,color .2s}
+.btn .arr{transition:transform .2s}
+.btn:hover .arr{transform:translateX(3px)}
+.btn-solid{background:var(--green);color:var(--forest)}
+.btn-solid:hover{background:var(--mint);border-color:var(--mint)}
+
+/* ---------- Platform ---------- */
+.platform{padding-block:var(--section) calc(var(--section) * .6)}
+.platform-head{margin-bottom:clamp(32px,4.5vw,52px)}
+
+.sources{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--gap);margin:0;padding:0;list-style:none}
+.src{display:flex;align-items:center;gap:16px;padding:22px 24px;background:var(--wash);color:var(--ink);font-weight:700;font-size:1.0625rem;line-height:1.3}
+.src svg{width:32px;height:32px;flex:none}
+
+.records{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:6px 12px;margin:20px 0 0;padding:0;list-style:none;font-family:var(--mono);font-size:.8125rem;color:var(--muted)}
+.records .sep{color:var(--rule)}
+
+/* Vertical connector: dot, line, arrowhead */
+.pipe{position:relative;width:2px;height:54px;margin:16px auto 16px;background:var(--green)}
+.pipe::before{content:"";position:absolute;top:-5px;left:50%;width:10px;height:10px;border-radius:50%;transform:translateX(-50%);background:var(--green)}
+.pipe::after{content:"";position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);border-left:6px solid transparent;border-right:6px solid transparent;border-top:8px solid var(--green)}
+
+.std{position:relative;padding:clamp(26px,3.6vw,40px) clamp(20px,3.6vw,44px) clamp(26px,3.6vw,40px) calc(clamp(20px,3.6vw,44px) + 4px);background:var(--wash);
+  display:grid;grid-template-columns:48px minmax(0,1fr);column-gap:20px}
+.std::before{content:"";position:absolute;top:0;bottom:0;left:0;width:4px;background:var(--green)}
+.std-icon{width:48px;height:48px;align-self:start;margin-top:-2px}
+.std h3{font-size:clamp(1.5rem,1.25rem + 1vw,1.875rem);line-height:1.2}
+.std-text{max-width:48rem}
+.std-text p{margin-top:12px}
+.jv{margin-top:22px!important;padding-top:20px;border-top:1px solid var(--rule)}
+.jv strong{color:var(--ink)}
+
+/* Fan-out: rail across three columns with a drop to each product */
+.branch{position:relative;height:58px;margin-bottom:16px}
+.rail{position:absolute;top:22px;height:2px;left:calc((100% - 2 * var(--gap)) / 6);right:calc((100% - 2 * var(--gap)) / 6);background:var(--green)}
+.drops{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--gap);height:100%}
+.drop{position:relative;justify-self:center;width:2px;background:var(--green)}
+.drop::before{content:"";position:absolute;left:50%;width:10px;height:10px;border-radius:50%;transform:translateX(-50%)}
+.drop::after{content:"";position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);border-left:6px solid transparent;border-right:6px solid transparent;border-top:8px solid var(--green)}
+.drop.mid{height:100%}
+.drop.mid::before{top:17px;background:var(--green)}
+.drop.side{margin-top:22px;height:calc(100% - 22px)}
+.drop.side::before{top:-5px;background:var(--paper);border:2px solid var(--green)}
+
+.products{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--gap);margin:0;padding:0;list-style:none}
+.product{padding:24px 24px 28px;background:var(--card);border:1px solid var(--rule);border-top:3px solid var(--green)}
+.product-head{display:flex;align-items:center;gap:14px;color:var(--ink);font-weight:700;font-size:1.0625rem;line-height:1.3}
+.product-head svg{width:30px;height:30px;flex:none}
+.product-head h3{font-size:inherit;line-height:inherit}
+.product p{margin-top:16px}
+
+/* ---------- Work with us ---------- */
+.work{padding-block:calc(var(--section) * .6) var(--section)}
+.audiences{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(36px,5vw,64px);margin-top:clamp(28px,3.5vw,40px)}
+.aud{display:flex;flex-direction:column;min-width:0;padding:4px 0 4px clamp(18px,2.5vw,28px);border-left:4px solid var(--green);scroll-margin-top:24px}
+.aud h3{font-size:clamp(1.375rem,1.2rem + .6vw,1.625rem);line-height:1.25}
+.aud p{margin-top:16px;max-width:34rem}
+.aud strong{color:var(--ink)}
+.cta{margin-top:auto;padding-top:26px}
+.cta a{display:inline-flex;align-items:center;gap:10px;color:var(--green-ink);font-family:var(--mono);font-size:.75rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:6px}
+.cta a:hover{color:var(--ink)}
+.cta .arr{transition:transform .2s}
+.cta a:hover .arr{transform:translateX(3px)}
+
+/* ---------- Contact ---------- */
+.contact{position:relative;overflow:hidden;isolation:isolate;background:var(--forest);color:var(--on-forest)}
+.contact .field{width:min(46%,520px)}
+.contact-body{padding-block:clamp(64px,8vw,100px) clamp(52px,6vw,76px)}
+.contact .eyebrow{color:var(--mint)}
+.contact .eyebrow::after{background:var(--forest-line)}
+.contact h2{color:var(--paper);max-width:22ch}
+.contact h2:focus{outline:none}
+.contact-note{margin-top:14px;max-width:36rem}
+.email-row{display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;margin-top:32px}
+.email{color:var(--paper);font-family:var(--mono);font-size:clamp(.9375rem,.85rem + .6vw,1.3rem);overflow-wrap:anywhere;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:7px}
+.email:hover{color:var(--mint)}
+.copy{padding:8px 12px;background:transparent;border:1px solid var(--forest-line);color:var(--mint);font-family:var(--mono);font-size:.6875rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;transition:border-color .2s}
+.copy:hover{border-color:var(--mint)}
+.foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 24px;padding-block:22px;border-top:1px solid var(--forest-line);color:var(--on-forest-muted);font-family:var(--mono);font-size:.75rem}
+.foot a{color:var(--paper);font-weight:700;text-underline-offset:5px}
+
+.vh{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap}
+
+/* ---------- Narrow screens ---------- */
+@media (max-width:760px){
+  .sources,.products,.audiences{grid-template-columns:minmax(0,1fr)}
+  .records{justify-content:flex-start;gap:8px}
+  .records .sep{display:none}
+  .records li:not(.sep){padding:4px 10px;border:1px solid var(--rule)}
+  .std{grid-template-columns:minmax(0,1fr);row-gap:14px}
+  .rail,.drop.side{display:none}
+  .drops{grid-template-columns:minmax(0,1fr)}
+  .drop.mid::before{top:-5px}
+  .field{width:100%;opacity:.55}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition:none!important;animation:none!important}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#platform">Skip to content</a>
+
+<header class="hero" id="top">
+  <canvas class="field" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <nav class="nav" aria-label="Main">
+      <span class="mark" aria-hidden="true">
+        <svg viewBox="0 0 26 26">
+          <circle cx="4" cy="4" r="2.2" fill="#2a584c"/><circle cx="13" cy="4" r="2.2" fill="#3f6d60"/><circle cx="22" cy="4" r="2.2" fill="#2eb07e"/>
+          <circle cx="4" cy="13" r="2.2" fill="#3f6d60"/><circle cx="13" cy="13" r="2.2" fill="#2eb07e"/><circle cx="22" cy="13" r="2.2" fill="#9fd8be"/>
+          <circle cx="4" cy="22" r="2.2" fill="#2eb07e"/><circle cx="13" cy="22" r="2.2" fill="#9fd8be"/><circle cx="22" cy="22" r="2.2" fill="#ffffff"/>
+        </svg>
+      </span>
+      <ul>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+
+    <div class="hero-body">
+      <h1>Oxford BioData</h1>
+      <p class="tagline">Data infrastructure for scientific development &amp;&nbsp;AI</p>
+      <p class="intro">Oxford BioData acquires preclinical, clinical-stage and agri-food biotechnology data, sells or licenses it to AI and industry partners, and develops models with biotechs.</p>
+      <div class="actions">
+        <a class="btn btn-solid" href="#contact">Sell or license your data <span class="arr" aria-hidden="true">&rarr;</span></a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="platform" id="platform" aria-labelledby="platform-title">
+    <div class="wrap">
+      <div class="platform-head">
+        <p class="eyebrow">The platform</p>
+        <h2 id="platform-title">From R&amp;D records to usable data products</h2>
+        <p class="lede">One platform for biotech data management and model development.</p>
+      </div>
+
+      <ul class="sources" aria-label="Data sources">
+        <li class="src">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3h6M10 3v6.2L4.7 18.3A1.8 1.8 0 0 0 6.2 21h11.6a1.8 1.8 0 0 0 1.5-2.7L14 9.2V3"/><path d="M7.3 14.6h9.4"/></svg>
+          Preclinical R&amp;D
+        </li>
+        <li class="src">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="4.5" width="14" height="16.5" rx="1.2"/><path d="M9.2 3h5.6v3H9.2z"/><path d="M8.5 10.5h7M8.5 13.8h7M8.5 17.1h4.4"/></svg>
+          Clinical studies
+        </li>
+        <li class="src">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 4C11.2 4 5 8.6 5 14.8c0 2.5 1.5 4.7 3.6 5.1C15 21 20 14.6 20 4z"/><path d="M3.5 20.5c3-4 6.6-7.2 11.3-9.8"/></svg>
+          Agri-food biotech
+        </li>
+      </ul>
+
+      <ul class="records" aria-label="Record types we take in">
+        <li>Spreadsheets</li><li class="sep" aria-hidden="true">|</li>
+        <li>Assay tables</li><li class="sep" aria-hidden="true">|</li>
+        <li>Instrument outputs</li><li class="sep" aria-hidden="true">|</li>
+        <li>Study records</li><li class="sep" aria-hidden="true">|</li>
+        <li>Lab &amp; staff documents</li>
+      </ul>
+
+      <div class="intake">
+        <div class="pipe" aria-hidden="true"></div>
+        <div class="std">
+          <svg class="std-icon" viewBox="0 0 24 24" fill="none" stroke="#2eb07e" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5 3 8.3l9 4.8 9-4.8z"/><path d="m3 12.2 9 4.8 9-4.8"/><path d="m3 16.1 9 4.8 9-4.8"/></svg>
+          <div class="std-text">
+            <h3>Standardization</h3>
+            <p>Harmonize formats, units and experimental metadata. Curate and organize records, apply quality control and retain provenance.</p>
+            <p class="jv"><strong>Proprietary harmonization engine.</strong> Co-developed in a joint venture with a leading California-based academic initiative, our ingestion tools link results to methods and lab records across formats, preserving experimental context.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="fanout">
+        <div class="branch" aria-hidden="true">
+          <span class="rail"></span>
+          <div class="drops"><span class="drop side"></span><span class="drop mid"></span><span class="drop side"></span></div>
+        </div>
+        <ul class="products" aria-label="What the platform delivers">
+          <li class="product">
+            <div class="product-head">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5.6" rx="7.5" ry="2.8"/><path d="M4.5 5.6v12.8c0 1.6 3.4 2.8 7.5 2.8s7.5-1.2 7.5-2.8V5.6"/><path d="M4.5 12c0 1.6 3.4 2.8 7.5 2.8s7.5-1.2 7.5-2.8"/></svg>
+              <h3>Data sale / licensing</h3>
+            </div>
+            <p>Buy or license curated datasets for AI training and R&amp;D.</p>
+          </li>
+          <li class="product">
+            <div class="product-head">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.5 18.5H6.8a4.3 4.3 0 0 1-.5-8.6 5.9 5.9 0 0 1 11.4-1.5 4.6 4.6 0 0 1-.2 10.1h-1"/><path d="M12 12.5v8M9.2 15.2 12 12.4l2.8 2.8"/></svg>
+              <h3>Biotech workspace</h3>
+            </div>
+            <p>Organized access to your own curated data for internal R&amp;D.</p>
+          </li>
+          <li class="product">
+            <div class="product-head">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5" cy="5" r="2.2"/><circle cx="19" cy="5" r="2.2"/><circle cx="12" cy="12" r="2.4"/><circle cx="5" cy="19" r="2.2"/><circle cx="19" cy="19" r="2.2"/><path d="m6.6 6.6 3.6 3.6M17.4 6.6l-3.6 3.6M6.6 17.4l3.6-3.6M17.4 17.4l-3.6-3.6"/></svg>
+              <h3>Model development</h3>
+            </div>
+            <p>Build internal models with Oxford BioData using your standardized data.</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="work" id="work" aria-labelledby="work-title">
+    <div class="wrap">
+      <p class="eyebrow" id="work-title">Work with Oxford BioData</p>
+      <div class="audiences">
+        <article class="aud" id="biotechs" aria-labelledby="biotechs-title">
+          <h3 id="biotechs-title">For biotechs</h3>
+          <p><strong>Get paid for your data.</strong> Sell or license historical R&amp;D data from shelved programs to Oxford BioData for an <strong>upfront payment and/or royalties</strong> from future deals involving your assets.</p>
+          <p><strong>Use it for internal R&amp;D.</strong> Access your curated, standardized, organized and quality-checked data in our platform. Develop internal models independently or with us.</p>
+          <p class="cta"><a href="#contact">Discuss your data <span class="arr" aria-hidden="true">&rarr;</span></a></p>
+        </article>
+        <article class="aud" id="buyers" aria-labelledby="buyers-title">
+          <h3 id="buyers-title">For AI &amp; industry buyers</h3>
+          <p><strong>Buy or license data.</strong> Access proprietary biotech datasets for AI training and R&amp;D, with experimental metadata, quality checks and agreed usage rights.</p>
+          <p><strong>Fit your workflow.</strong> Review samples, agree scope and receive structured exports or secure cloud delivery. Add integrations or model development as required.</p>
+          <p class="cta"><a href="#contact">Request a data sample <span class="arr" aria-hidden="true">&rarr;</span></a></p>
+        </article>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="contact" id="contact" aria-labelledby="contact-title">
+  <canvas class="field" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <div class="contact-body">
+      <p class="eyebrow">Contact</p>
+      <h2 id="contact-title" tabindex="-1">Talk to us about your data.</h2>
+      <p class="contact-note">Whether you hold data from shelved programs or need training data for your models, write to us.</p>
+      <div class="email-row">
+        <a class="email" href="mailto:team@oxfordbiodata.com">team@oxfordbiodata.com</a>
+        <button class="copy" type="button" id="copy-email" hidden>Copy</button>
+        <span class="vh" role="status" id="copy-status"></span>
+      </div>
+    </div>
+    <div class="foot">
+      <span>&copy; 2026 Oxford BioData</span>
+      <a href="https://oxfordbiodata.com/">oxfordbiodata.com</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var reduce = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+  var css = getComputedStyle(document.documentElement);
+  function token(name, fallback) { return (css.getPropertyValue(name) || "").trim() || fallback; }
+  var C = { dot: token("--dot", "#3f6d60"), green: token("--green", "#2eb07e"), mint: token("--mint", "#9fd8be") };
+
+  /* Seeded random so the dot field has the same arrangement on every visit */
+  function rng(seed) {
+    return function () {
+      seed |= 0; seed = (seed + 0x6D2B79F5) | 0;
+      var t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  /* Dot field: a static grid of data points, densest at the right edge */
+  function field(cv, seed) {
+    var ctx = cv.getContext && cv.getContext("2d");
+    if (!ctx) return;
+    var GAP = 16, dots = [], w = 0, h = 0;
+
+    function build() {
+      var r = cv.getBoundingClientRect();
+      w = r.width; h = r.height;
+      if (!w || !h) return;
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      var R = rng(seed), cols = Math.ceil(w / GAP), rows = Math.ceil(h / GAP);
+      dots = [];
+      for (var i = 0; i < cols; i++) {
+        var fx = 1 - i / cols;
+        for (var j = 0; j < rows; j++) {
+          var fy = 1 - (j / rows) * 0.45;
+          var p = 0.07 + 0.8 * Math.pow(fx, 1.8) * fy;
+          if (R() < p) {
+            dots.push({ x: w - GAP / 2 - i * GAP, y: GAP / 2 + j * GAP, a: 0.5 + 0.5 * R(), hot: R() < 0.05 });
+          }
+        }
+      }
+      draw();
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, w, h);
+      for (var k = 0; k < dots.length; k++) {
+        var d = dots[k];
+        ctx.globalAlpha = d.a;
+        ctx.fillStyle = d.hot ? C.green : C.dot;
+        ctx.beginPath(); ctx.arc(d.x, d.y, 1.6, 0, 6.2832); ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+    }
+
+    build();
+    var timer;
+    window.addEventListener("resize", function () { clearTimeout(timer); timer = setTimeout(build, 150); });
+  }
+  var canvases = document.querySelectorAll("canvas.field");
+  for (var i = 0; i < canvases.length; i++) field(canvases[i], 11 + i * 7);
+
+  /* Links to the contact section glide down to it. The reader can stop the glide
+     by scrolling; with reduced motion the jump is instant. */
+  var contact = document.getElementById("contact");
+  var contactTitle = document.getElementById("contact-title");
+  var gliding = 0;
+  function stopGlide() { if (gliding) { cancelAnimationFrame(gliding); gliding = 0; } }
+  ["wheel", "touchstart", "keydown"].forEach(function (ev) {
+    window.addEventListener(ev, stopGlide, { passive: true });
+  });
+  function ease(t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
+  function glideTo(el) {
+    var startY = window.pageYOffset;
+    var maxY = document.documentElement.scrollHeight - window.innerHeight;
+    var endY = Math.min(el.getBoundingClientRect().top + startY, maxY);
+    var dist = endY - startY;
+    var finish = function () { if (contactTitle) contactTitle.focus({ preventScroll: true }); };
+    if (reduce || Math.abs(dist) < 2) { window.scrollTo(0, endY); finish(); return; }
+    var dur = Math.min(1500, Math.max(800, Math.abs(dist) * 0.5));
+    var t0 = null;
+    stopGlide();
+    function step(now) {
+      if (t0 === null) t0 = now;
+      var p = Math.min(1, (now - t0) / dur);
+      window.scrollTo(0, startY + dist * ease(p));
+      if (p < 1) { gliding = requestAnimationFrame(step); } else { gliding = 0; finish(); }
+    }
+    gliding = requestAnimationFrame(step);
+  }
+  if (contact) {
+    var links = document.querySelectorAll('a[href="#contact"]');
+    for (var l = 0; l < links.length; l++) {
+      links[l].addEventListener("click", function (e) { e.preventDefault(); glideTo(contact); });
+    }
+  }
+
+  /* Copy the email address */
+  var btn = document.getElementById("copy-email");
+  var addr = document.querySelector(".email");
+  var status = document.getElementById("copy-status");
+  if (btn && addr) {
+    btn.hidden = false;
+    var reset;
+    function say(label, msg) {
+      btn.textContent = label; if (status) status.textContent = msg;
+      clearTimeout(reset); reset = setTimeout(function () { btn.textContent = "Copy"; }, 1800);
+    }
+    function selectIt() {
+      var range = document.createRange(); range.selectNodeContents(addr);
+      var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(range);
+      say("Selected", "Email address selected");
+    }
+    btn.addEventListener("click", function () {
+      var text = addr.textContent.trim();
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function () { say("Copied", "Email address copied"); }, selectIt);
+      } else { selectIt(); }
+    });
+  }
+})();
+</script>
+</body>
+</html>
