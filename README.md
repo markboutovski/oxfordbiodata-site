@@ -12,14 +12,24 @@ The Oxford BioData website: a single static HTML page, hosted on Netlify. There 
 | `og-image.png` | 1200×630 image shown when the link is shared on LinkedIn, Slack, email, etc. |
 | `netlify.toml` | Netlify settings: publish the repo root, cache the fonts |
 
+## The page
+
+One manifesto, read top to bottom:
+
+1. A forest-green masthead carrying the company name.
+2. One uninterrupted column of prose, opening with the thesis sentence (the `.lede` paragraph) and running through to the team paragraph. No headings, rules or diagrams interrupt it.
+3. A slim forest-green band with the contact address.
+
 ## Editing
 
-- **Text** lives directly in `index.html`, in page order: hero, the platform diagram, "Work with Oxford BioData", contact.
-- **Colours and spacing** are defined once as CSS variables at the top of the `<style id="site">` block (`--forest`, `--green`, `--ink` and so on). Change them there rather than in individual rules.
-- **Contact email** appears in two places: the contact section near the bottom of `index.html`, and the `application/ld+json` block in the `<head>`.
-- **Page description and link preview text** are the `<meta name="description">` and `og:` tags in the `<head>`.
+- **Text** lives directly in `index.html`, in page order: masthead, then the eight paragraphs of `<main>`, then the contact band. The paragraphs are plain `<p>` elements in reading order; add or remove them freely.
+- **Colours and spacing** are defined once as CSS variables at the top of the `<style id="site">` block (`--forest`, `--green`, `--ink`, `--column` and so on). Change them there rather than in individual rules. `--column` sets the width of the reading column.
+- **Contact email** appears in three places: the contact band near the bottom, the `mailto:` link on the same element, and the `application/ld+json` block in the `<head>`.
+- **Page description and link preview text** are the `<meta name="description">` and `og:` tags in the `<head>`. If the positioning line changes, `og-image.png` needs regenerating too — it has the tagline baked into the picture.
 
-To preview locally, open `index.html` in a browser. Fonts load properly only when served from a web server, so for an exact preview run `python3 -m http.server` in this folder and open http://localhost:8000.
+British spelling throughout (`characterised`, `homogenising`), and `<html lang="en-GB">` to match.
+
+To preview locally, run `python3 -m http.server` in this folder and open http://localhost:8000. Opening `index.html` straight from disk mostly works, but the fonts and the favicon are referenced from the site root (`/fonts/…`), so they only load when it is served.
 
 ## How changes go live
 
